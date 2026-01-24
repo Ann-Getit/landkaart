@@ -11,7 +11,7 @@ the project uses:
 
 
 HTML to structure the page by creating:
-- one map contair
+- one map container
 - 3 buttons 
 
 

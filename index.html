@@ -44,9 +44,10 @@
 
 
         function initialize()
-        { //scope: de zichbaarheid van de variabele
+        { //scope: mapobject word zichtbaar.
          map = L.map('map').setView([52, 5], 7); 
 
+         //openstreetmap word
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
          attribution: 'AET 2025'
          }).addTo(map);
@@ -58,9 +59,6 @@
          L.marker([18.588783206512232, -68.42033038895468]).addTo(map).bindPopup('Punta Cana'); //de coordinatoren vind je terug op google map. click de plek en dan rechter klik.
 
          L.marker([52.06275232036461, 4.297458493109473]).addTo(map).bindPopup('Den haag');
-
-         
-
         }
 
         function flyToPuntaCana()
@@ -74,34 +72,40 @@
              map.flyTo(amsterdam, 15); // 15 = zoom level
         }
 
-        function getStations()
-        {
-            $.getJSON('https://xanderwemmers.nl/api/ns', showStations);
-        }//'
+        function getStations() {
+
+            $.getJSON("https://jouwproject.onrender.com/api/stations", showStations);
+        }
+     
+
 
         function showStations(data)
         {
-            console.log(data.length);
+            console.log(data);
             for (var st of data) //var st is per station en data (naam kan je veranderen) het gehele data dus alle stations
-            {
-              L.circle([st.Lat, st.Long], { radius: 500 }).addTo(map).bindPopup(`
-             <strong>${st.Name}</strong><br>
+            {// data.)
+              L.circle([st.lat, st.lng], { radius: 500 }).addTo(map).bindPopup(`
+             <strong>${st.namen.lang}</strong><br>
           `);
             }
-        }
-
-            
-
-    function getDepartures(stationName) {
-     $.getJSON(
-      'https://xanderwemmers.nl/dev/treinen?station=' + encodeURIComponent(stationName)
-  );
-}
-function showDepartures(data) {
-  console.log(data); 
-}
+        }      
         
-         
+        
+             /* $.ajax({
+            url: 'https://gateway.apiportal.ns.nl/reisinformatie-api/api/v2/stations?limit=10',
+            method: "GET",
+            headers: {
+              "Ocp-Apim-Subscription-Key": "",
+              "Cache-Control": "no-cache"
+         }, //env.???
+            success: function(data) {
+                console.log(data); 
+            showStations(data);
+            },
+            error: function(err) {
+                console.error(err);
+            }
+        });*/
     </script>
 </head>
 <body onload="initialize()">
@@ -121,3 +125,6 @@ function showDepartures(data) {
     
 </body>
 </html>
+
+
+
